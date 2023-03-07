@@ -29,15 +29,6 @@ var PublicKey3 = pair3.publicKey();
 console.log ('Account3',SecretKey3, PublicKey3);
 
 
-
-
-    // The SDK does not have tools for creating test accounts, so you'll have to
-// make your own HTTP request.
-
-// if you're trying this on Node, install the `node-fetch` library and
-// uncomment the next line:
-// const fetch = require('node-fetch');
-
 (async function main() {
     try {
       const response = await fetch(
@@ -62,12 +53,21 @@ console.log ('Account3',SecretKey3, PublicKey3);
       });
       //add the create account operation to the createAccountTx transaction.
       createAccountTx = await createAccountTx
-        .addOperation(
-          StellarSdk.Operation.createAccount({
-            destination: childAccount.publicKey(),
-            startingBalance: "5",
-          }),
-        )
+        .addOperation(StellarSdk.Operation.createAccount({
+        source: MasterPublicKey,
+        destination: PublicKey1,
+        startingBalance: "100000"  
+        }))
+        .addOperation(StellarSdk.Operation.createAccount({
+            source: MasterPublicKey,
+            destination: PublicKey2,
+            startingBalance: "100000"
+        }))
+        .addOperation(StellarSdk.Operation.createAccount({
+            source: MasterPublicKey,
+            destination: PublicKey3,
+            startingBalance: "100000"
+        }))	
         .setTimeout(180)
         .build();
       //sign the transaction with the account that was created from friendbot.
