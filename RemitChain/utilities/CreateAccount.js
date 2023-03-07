@@ -12,6 +12,7 @@ const MasterPublicKey = pair.publicKey();
 console.log("master account:", MasterSecret, MasterPublicKey);
 
 
+
 const pair1 = StellarSdk.Keypair.random();
 const pair2 = StellarSdk.Keypair.random();
 const pair3 = StellarSdk.Keypair.random();
@@ -29,6 +30,7 @@ var PublicKey3 = pair3.publicKey();
 console.log ('Account3',SecretKey3, PublicKey3);
 
 
+
 (async function main() {
     try {
       const response = await fetch(
@@ -41,10 +43,11 @@ console.log ('Account3',SecretKey3, PublicKey3);
     } catch (e) {
       console.error("ERROR!", e);
     }
-    // After you've got your test lumens from friendbot, we can also use that account to create a new account on the ledger.
+    
+
     try {
       const server = new StellarSdk.Server("https://horizon-testnet.stellar.org");
-      var parentAccount = await server.loadAccount(pair.publicKey()); //make sure the parent account exists on ledger
+      var parentAccount = await server.loadAccount(pair.publicKey());
       var childAccount = StellarSdk.Keypair.random(); //generate a random account to create
       //create a transacion object.
       var createAccountTx = new StellarSdk.TransactionBuilder(parentAccount, {
@@ -53,21 +56,21 @@ console.log ('Account3',SecretKey3, PublicKey3);
       });
       //add the create account operation to the createAccountTx transaction.
       createAccountTx = await createAccountTx
-        .addOperation(StellarSdk.Operation.createAccount({
+      .addOperation(StellarSdk.Operation.createAccount({
         source: MasterPublicKey,
         destination: PublicKey1,
-        startingBalance: "100000"  
-        }))
-        .addOperation(StellarSdk.Operation.createAccount({
-            source: MasterPublicKey,
-            destination: PublicKey2,
-            startingBalance: "100000"
-        }))
-        .addOperation(StellarSdk.Operation.createAccount({
-            source: MasterPublicKey,
-            destination: PublicKey3,
-            startingBalance: "100000"
-        }))	
+        startingBalance: "1000"  
+    }))
+.addOperation(StellarSdk.Operation.createAccount({
+        source: MasterPublicKey,
+        destination: pair2.publicKey(),
+        startingBalance: "1000"
+    }))
+.addOperation(StellarSdk.Operation.createAccount({
+        source: MasterPublicKey,
+        destination: PublicKey3,
+        startingBalance: "1000"
+    }))	
         .setTimeout(180)
         .build();
       //sign the transaction with the account that was created from friendbot.
