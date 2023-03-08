@@ -9,28 +9,6 @@ var receivingKeys2 = StellarSdk.Keypair.fromSecret('SAL2SSJRRMPIRSTL3H4PMMMWODMN
 
 var USD = new StellarSdk.Asset('USD', 'GB55EOQYN5BP3H4JF5UJAVM6JPVQAQVQDHGTE6KDST33GEL3FQ4VQK3K');
 
-
-//load account
-// const account = await server.loadAccount(receivingKeys1.publicKey());
-
-// const transaction = new StellarSdk.TransactionBuilder(account, {
-//     fee: StellarSdk.BASE_FEE,
-//     networkPassphrase: StellarSdk.Networks.TESTNET,
-//   })
-//   .addOperation(
-//     StellarSdk.Operation.changeTrust({
-//       asset: astroDollar,
-//       limit: "1000",
-//       source: receivingKeys1.publicKey(),
-//     }),
-//   )
-//    // setTimeout is required for a transaction
-//    .setTimeout(100)
-//    .build();
-//    transaction.sign(receivingKeys);
-//     return server.submitTransaction(transaction);
- 
-
     
 server
 .loadAccount(receivingKeys1.publicKey())
