@@ -32,9 +32,9 @@ console.log("master account:", MasterSecret, MasterPublicKey);
       const server = new StellarSdk.Server("https://horizon-testnet.stellar.org");
       var parentAccount = await server.loadAccount(pair.publicKey());
       
-const pair1 = StellarSdk.Keypair.random();
-const pair2 = StellarSdk.Keypair.random();
-const pair3 = StellarSdk.Keypair.random();
+      const pair1 = StellarSdk.Keypair.random();
+      const pair2 = StellarSdk.Keypair.random();
+      const pair3 = StellarSdk.Keypair.random();
       //create a transacion object.
       var createAccountTx = new StellarSdk.TransactionBuilder(parentAccount, {
         fee: StellarSdk.BASE_FEE,
@@ -73,9 +73,9 @@ const pair3 = StellarSdk.Keypair.random();
           return error;
         });
       console.log(txResponse);
-      console.log("Created the new account", pair1.publicKey());
-      console.log("Created the new account", pair2.publicKey());
-      console.log("Created the new account", pair3.publicKey());
+      console.log("Created the new account", pair1.publicKey(), pair1.secret());
+      console.log("Created the new account", pair2.publicKey(), pair2.secret());
+      console.log("Created the new account", pair3.publicKey(), pair3.secret());
     } catch (e) {
       console.error("ERROR!", e);
     }
@@ -90,3 +90,11 @@ const pair3 = StellarSdk.Keypair.random();
     
   })();
 
+
+//   Created the new account GA7LFLVNJ77PZGX2KHXUVQVY6ELTYNLKZ55GA7NEWULPTGDABJU4YI6A
+// Created the new account GCHLHCY6PNLDCVNWENXI2QOBBZNRARUIH2TGT5KRCBN7D4WMXWC7AZGK
+// Created the new account GDQ2H22GEUSCM34IL5EBIKZDZVKSSE7WYSG6RTBAA7Z3E32GBLO4JS57
+
+// SAEZVFMWPKH4ZWBU5KJ5XBE52KR44W6GJRRJWUVJGCNMBK2MCFDPM4TF
+// SAXIB7GFQV3SU254NORTL4J2QSHVFXAICCWB6JHPQN6OFZQIR47JGMSR
+// SAL2SSJRRMPIRSTL3H4PMMMWODMNGUJCX7YWACRLASPUJSECVPS2UFFQ
