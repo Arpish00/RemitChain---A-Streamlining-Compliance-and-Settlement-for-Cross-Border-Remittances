@@ -5,29 +5,12 @@ const server = new StellarSdk.Server('http://127.0.0.1:8000', {allowHttp: true})
 
 
 
-const pair = StellarSdk.Keypair.master('Standalone Network');
+const pair = StellarSdk.Keypair.random();
 const MasterSecret = pair.secret();
 const MasterPublicKey = pair.publicKey();
 
 console.log("master account:", MasterSecret, MasterPublicKey);
 
-
-
-const pair1 = StellarSdk.Keypair.random();
-const pair2 = StellarSdk.Keypair.random();
-const pair3 = StellarSdk.Keypair.random();
-
-var SecretKey1 = pair1.secret();
-var PublicKey1 = pair1.publicKey();
-console.log ('Account1',SecretKey1, PublicKey1);
-
-var SecretKey2 = pair2.secret();
-var PublicKey2 = pair2.publicKey();
-console.log ('Account2',SecretKey2, PublicKey2);
-
-var SecretKey3 = pair3.secret();
-var PublicKey3 = pair3.publicKey();
-console.log ('Account3',SecretKey3, PublicKey3);
 
 
 
@@ -48,7 +31,10 @@ console.log ('Account3',SecretKey3, PublicKey3);
     try {
       const server = new StellarSdk.Server("https://horizon-testnet.stellar.org");
       var parentAccount = await server.loadAccount(pair.publicKey());
-      var childAccount = StellarSdk.Keypair.random(); //generate a random account to create
+      
+const pair1 = StellarSdk.Keypair.random();
+const pair2 = StellarSdk.Keypair.random();
+const pair3 = StellarSdk.Keypair.random();
       //create a transacion object.
       var createAccountTx = new StellarSdk.TransactionBuilder(parentAccount, {
         fee: StellarSdk.BASE_FEE,
@@ -56,21 +42,21 @@ console.log ('Account3',SecretKey3, PublicKey3);
       });
       //add the create account operation to the createAccountTx transaction.
       createAccountTx = await createAccountTx
-      .addOperation(StellarSdk.Operation.createAccount({
-        source: MasterPublicKey,
-        destination: PublicKey1,
-        startingBalance: "1000"  
-    }))
-.addOperation(StellarSdk.Operation.createAccount({
-        source: MasterPublicKey,
-        destination: pair2.publicKey(),
-        startingBalance: "1000"
-    }))
-.addOperation(StellarSdk.Operation.createAccount({
-        source: MasterPublicKey,
-        destination: PublicKey3,
-        startingBalance: "1000"
-    }))	
+      .addOperation(
+        StellarSdk.Operation.createAccount({
+          destination: pair1.publicKey(),
+          startingBalance: "5",
+        }))	
+        .addOperation(
+          StellarSdk.Operation.createAccount({
+            destination: pair2.publicKey(),
+            startingBalance: "5",
+          }))	
+          .addOperation(
+            StellarSdk.Operation.createAccount({
+              destination: pair3.publicKey(),
+              startingBalance: "5",
+            }),)	
         .setTimeout(180)
         .build();
       //sign the transaction with the account that was created from friendbot.
@@ -87,7 +73,9 @@ console.log ('Account3',SecretKey3, PublicKey3);
           return error;
         });
       console.log(txResponse);
-      console.log("Created the new account", childAccount.publicKey());
+      console.log("Created the new account", pair1.publicKey());
+      console.log("Created the new account", pair2.publicKey());
+      console.log("Created the new account", pair3.publicKey());
     } catch (e) {
       console.error("ERROR!", e);
     }
@@ -101,3 +89,4 @@ console.log ('Account3',SecretKey3, PublicKey3);
     });
     
   })();
+
