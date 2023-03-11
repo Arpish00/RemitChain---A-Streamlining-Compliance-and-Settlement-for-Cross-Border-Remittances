@@ -2,7 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const app = express(); 
 const pg = require('pg');
-const conString = "postgres://bank1:bank1@localhost:5432/banka";
+const conString = "postgres://bank1:bank1@localhost:5432/bankb";
 const client = new pg.Client(conString);
 const fetch = require('node-fetch');
 
@@ -31,7 +31,7 @@ app.use(function (req, res, next) {
     next();
 });
 
-var server = app.listen(process.env.PORT || 5000, function () {
+var server = app.listen(process.env.PORT || 5100, function () {
     var port = server.address().port;
     console.log("App now running on port", port);
 });
