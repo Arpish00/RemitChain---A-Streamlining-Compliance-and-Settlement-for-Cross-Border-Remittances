@@ -6,7 +6,7 @@ const conString = "postgres://bankauser:bankauser@localhost:5432/banka";
 const requestObj = require('request');
 const client = new pg.Client(conString);
 const USD = 'USD';
-const issuer = 'GAIHBCB57M2SDFQYUMANDBHW4YYMD3FJVK2OGHRKKCNF2HBZIRBKRX6E';
+const issuer = '';
 var txid = 1001;
 
 app.use(bodyParser.json());
